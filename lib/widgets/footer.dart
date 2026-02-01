@@ -33,7 +33,7 @@ class Footer extends StatelessWidget {
                   color: Colors.white,
                   size: isMobile ? 28 : 32, // Smaller on mobile
                 ),
-                onPressed: () => launchUrl(Uri.parse('mailto:your.kunaldhopavkarwork@gmail.com')),
+                onPressed: () => launchUrl(Uri.parse('mailto:kunaldhopavkarwork@gmail.com')),
               ),
               IconButton(
                 icon: Icon(
