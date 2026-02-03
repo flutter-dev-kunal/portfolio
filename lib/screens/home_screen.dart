@@ -12,25 +12,27 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
             const Header(), // No animation for header, or add one if desired
+            // _AnimatedOnScrollWidget(
+            //   key: const Key('about'),
+            //   animationType: AnimationType.fadeIn,
+            //   child: const AboutSection(),
+            // ),
             _AnimatedOnScrollWidget(
-              key: const Key('about'),
+              key: const Key('skills'),
               animationType: AnimationType.fadeIn,
-              child: const AboutSection(),
+              child: const SkillsSection(),
             ),
             _AnimatedOnScrollWidget(
               key: const Key('projects'),
               animationType: AnimationType.slideFromLeft,
               child: const ProjectsSection(),
             ),
-            _AnimatedOnScrollWidget(
-              key: const Key('skills'),
-              animationType: AnimationType.fadeIn,
-              child: const SkillsSection(),
-            ),
+
             _AnimatedOnScrollWidget(
               key: const Key('footer'),
               animationType: AnimationType.fadeIn,

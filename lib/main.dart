@@ -13,9 +13,8 @@ class PortfolioApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Developer Portfolio',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xFF374151),
         textTheme: GoogleFonts.poppinsTextTheme(),
         scaffoldBackgroundColor: Colors.white,
       ),

@@ -10,13 +10,9 @@ class Header extends StatelessWidget {
     final isTablet = screenWidth >= 600 && screenWidth < 1200;
 
     return Container(
-      height: MediaQuery.of(context).size.height * (isMobile ? 0.65 : 0.75), // Shorter on mobile
+      height: MediaQuery.of(context).size.height * (isMobile || isTablet ? 0.65 : 0.75), // Shorter on mobile
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blueAccent, Colors.purpleAccent],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: Color(0xFF101827),
       ),
       child: Center(
         child: Padding(
@@ -24,27 +20,46 @@ class Header extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: isMobile ? 70 : 90, // Smaller avatar on mobile
-                backgroundImage: const AssetImage('assets/my_pic.jpeg'), // Replace with your photo
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: isMobile ? 110 : 150,
+                    height: isMobile ? 110 : 150,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF738da1),
+                      shape: BoxShape.circle
+                    )
+                  ),
+                  CircleAvatar(
+                    radius: isMobile ? 50 : 70, // Smaller avatar on mobile
+                    backgroundImage: const AssetImage('assets/my_pic.jpeg'), // Replace with your photo
+                  )
+                ],
               ),
-              SizedBox(height: isMobile ? 15 : 20),
+              SizedBox(height: isMobile ? 20 : 30),
               Text(
                 'Kunal Dhopavkar',
                 style: Theme.of(context).textTheme.displaySmall?.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: isMobile ? 28 : null, // Smaller font on mobile
+                  fontSize: isMobile ? 25 : 30, // Smaller font on mobile
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: isMobile ? 8 : 10),
+              SizedBox(height: isMobile ? 15 : 25),
               Text(
-                'Flutter Developer | Android & iOS',
+                'Flutter Developer (2.5+ years)',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: Colors.white70,
-                  fontSize: isMobile ? 16 : null, // Smaller font on mobile
+                  fontSize: isMobile ? 16 : 22, // Smaller font on mobile
                 ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: isMobile ? 25 : 30),
+              const Text(
+                "I love creating beautiful, performant UI's and solving complex problems.",
+                style: TextStyle(fontSize: 16,color: Color(0xFF838996)), // Smaller font
                 textAlign: TextAlign.center,
               ),
               // SizedBox(height: isMobile ? 20 : 30),

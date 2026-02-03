@@ -6,29 +6,22 @@ class SkillsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final skills = [
-      {'name': 'Flutter', 'icon': Icons.flutter_dash},
-      {'name': 'Dart', 'icon': Icons.code},
-      {'name': 'Clean Architecture', 'icon': Icons.architecture},
-      {'name': 'Firebase', 'icon': Icons.cloud},
-      {'name': 'REST APIs', 'icon': Icons.api},
-      {'name': 'UI/UX Design', 'icon': Icons.design_services},
-      {'name': 'Bloc State Management', 'icon': Icons.design_services},
+      'Flutter','Dart', 'Clean Architecture',
+      'Firebase','REST APIs', 'UI/UX Design','Bloc State Management',
+      'Swift UI', 'Kotlin'
       // Add more skills with icons as needed
     ];
 
     return LayoutBuilder(
       builder: (context, constraints) {
         final isMobile = constraints.maxWidth < 600;
+        final isTablet = constraints.maxWidth >= 600 && constraints.maxWidth < 1200;
         final crossAxisCount = isMobile ? 2 : 3;
 
         return Container(
           padding: EdgeInsets.all(isMobile ? 30 : 50),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue[50]!, Colors.purple[50]!],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            color: Color(0xFF1f2937),
           ),
           child: Column(
             children: [
@@ -37,7 +30,7 @@ class SkillsSection extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: isMobile ? 28 : null,
-                  color: Colors.blue[800],
+                  color: Colors.white
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -45,18 +38,19 @@ class SkillsSection extends StatelessWidget {
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal:
+                  !isMobile && !isTablet ? MediaQuery.of(context).size.width * 0.15 : 10),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: crossAxisCount,
                   crossAxisSpacing: 15, // Reduced from 20
                   mainAxisSpacing: 15, // Reduced from 20
-                  childAspectRatio: 2.6, // Reduced from 1.2 for shorter boxes
+                  childAspectRatio: 3.3, // Reduced from 1.2 for shorter boxes
                 ),
                 itemCount: skills.length,
                 itemBuilder: (context, index) {
                   final skill = skills[index];
                   return _SkillChip(
-                    name: skill['name'] as String,
-                    icon: skill['icon'] as IconData,
+                    name: skill,
                     isMobile: isMobile,
                   );
                 },
@@ -71,12 +65,10 @@ class SkillsSection extends StatelessWidget {
 
 class _SkillChip extends StatefulWidget {
   final String name;
-  final IconData icon;
   final bool isMobile;
 
   const _SkillChip({
     required this.name,
-    required this.icon,
     required this.isMobile,
   });
 
@@ -101,13 +93,11 @@ class _SkillChipState extends State<_SkillChip> {
         duration: const Duration(milliseconds: 200),
         child: Container(
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Colors.blueAccent, Colors.purpleAccent],
-            ),
-            borderRadius: BorderRadius.circular(widget.isMobile ? 15 : 20),
+            color: Color(0xFF374151),
+            borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.black.withValues(alpha: 0.2),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),
@@ -116,12 +106,6 @@ class _SkillChipState extends State<_SkillChip> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                widget.icon,
-                size: widget.isMobile ? 25 : 40, // Reduced from 40/50
-                color: Colors.white,
-              ),
-              const SizedBox(height: 8), // Reduced from 10
               Text(
                 widget.name,
                 style: TextStyle(
