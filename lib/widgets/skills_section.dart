@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
@@ -52,7 +53,7 @@ class SkillsSection extends StatelessWidget {
                   return _SkillChip(
                     name: skill,
                     isMobile: isMobile,
-                  );
+                  ).animate().slide(duration: Duration(seconds: 1));
                 },
               ),
             ],
@@ -111,7 +112,7 @@ class _SkillChipState extends State<_SkillChip> {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: widget.isMobile ? 10 : 14, // Slightly smaller text
+                  fontSize: widget.isMobile ? 13 : 15, // Slightly smaller text
                 ),
                 textAlign: TextAlign.center,
               ),

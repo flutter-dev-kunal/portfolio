@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});
@@ -24,19 +25,19 @@ class Header extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    width: isMobile ? 110 : 150,
-                    height: isMobile ? 110 : 150,
+                    width: isMobile ? 120 : 150,
+                    height: isMobile ? 120 : 150,
                     decoration: BoxDecoration(
                       color: Color(0xFF738da1),
                       shape: BoxShape.circle
                     )
                   ),
                   CircleAvatar(
-                    radius: isMobile ? 50 : 70, // Smaller avatar on mobile
+                    radius: isMobile ? 55 : 70, // Smaller avatar on mobile
                     backgroundImage: const AssetImage('assets/my_pic.jpeg'), // Replace with your photo
                   )
                 ],
-              ),
+              ).animate().fadeIn(duration: Duration(seconds: 1)),
               SizedBox(height: isMobile ? 20 : 30),
               Text(
                 'Kunal Dhopavkar',
@@ -46,7 +47,7 @@ class Header extends StatelessWidget {
                   fontSize: isMobile ? 25 : 30, // Smaller font on mobile
                 ),
                 textAlign: TextAlign.center,
-              ),
+              ).animate().fadeIn(duration: Duration(seconds: 1)),
               SizedBox(height: isMobile ? 15 : 25),
               Text(
                 'Flutter Developer (2.5+ years)',
@@ -55,13 +56,13 @@ class Header extends StatelessWidget {
                   fontSize: isMobile ? 16 : 22, // Smaller font on mobile
                 ),
                 textAlign: TextAlign.center,
-              ),
+              ).animate().fadeIn(duration: Duration(seconds: 1)),
               SizedBox(height: isMobile ? 25 : 30),
               const Text(
                 "I love creating beautiful, performant UI's and solving complex problems.",
                 style: TextStyle(fontSize: 16,color: Color(0xFF838996)), // Smaller font
                 textAlign: TextAlign.center,
-              ),
+              ).animate().fadeIn(duration: Duration(seconds: 1)),
               // SizedBox(height: isMobile ? 20 : 30),
               // ElevatedButton(
               //   onPressed: () {},

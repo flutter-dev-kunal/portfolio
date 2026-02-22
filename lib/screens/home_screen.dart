@@ -22,18 +22,17 @@ class HomeScreen extends StatelessWidget {
             //   animationType: AnimationType.fadeIn,
             //   child: const AboutSection(),
             // ),
-            _AnimatedOnScrollWidget(
+            AnimatedOnScrollWidget(
               key: const Key('skills'),
               animationType: AnimationType.fadeIn,
               child: const SkillsSection(),
             ),
-            _AnimatedOnScrollWidget(
+            AnimatedOnScrollWidget(
               key: const Key('projects'),
-              animationType: AnimationType.slideFromLeft,
+              animationType: AnimationType.fadeIn,
               child: const ProjectsSection(),
             ),
-
-            _AnimatedOnScrollWidget(
+            AnimatedOnScrollWidget(
               key: const Key('footer'),
               animationType: AnimationType.fadeIn,
               child: const Footer(),
@@ -48,21 +47,21 @@ class HomeScreen extends StatelessWidget {
 // Custom widget for scroll-triggered animations
 enum AnimationType { fadeIn, slideFromLeft, scale }
 
-class _AnimatedOnScrollWidget extends StatefulWidget {
+class AnimatedOnScrollWidget extends StatefulWidget {
   final Widget child;
   final AnimationType animationType;
 
-  const _AnimatedOnScrollWidget({
+  const AnimatedOnScrollWidget({
     required Key key,
     required this.child,
     required this.animationType,
   }) : super(key: key);
 
   @override
-  State<_AnimatedOnScrollWidget> createState() => _AnimatedOnScrollWidgetState();
+  State<AnimatedOnScrollWidget> createState() => _AnimatedOnScrollWidgetState();
 }
 
-class _AnimatedOnScrollWidgetState extends State<_AnimatedOnScrollWidget>
+class _AnimatedOnScrollWidgetState extends State<AnimatedOnScrollWidget>
     with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
