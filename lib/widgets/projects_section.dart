@@ -17,6 +17,10 @@ class ProjectsSection extends StatelessWidget {
         title: 'Nudge App',
         description: 'Lead management platform featuring real-time tracking, integrated chat, and automated follow-up reminders.',
       ),
+      Project(
+        title: 'Limecar App',
+        description: 'Car rental platform for Goa offering easy vehicle booking, flexible plans, and seamless ride management.',
+      ),
     ];
 
     return LayoutBuilder(
@@ -135,6 +139,8 @@ class ProjectsSection extends StatelessWidget {
       case 0: launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=com.salcete.pharmacy_android&hl=en_IN'));
               break;
       case 1: launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=in.dreamlogic.nudge&hl=en_IN'));
+              break;
+      case 2: launchUrl(Uri.parse('https://play.google.com/store/search?q=limecar&c=apps&hl=en_IN'));
               break;
       default: break;
     }
