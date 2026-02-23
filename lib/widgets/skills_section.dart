@@ -9,7 +9,7 @@ class SkillsSection extends StatelessWidget {
     final skills = [
       'Flutter','Dart', 'Clean Architecture',
       'Firebase','REST APIs', 'UI/UX Design','Bloc State Management',
-      'Swift UI', 'Kotlin'
+      'Swift UI', 'Kotlin', 'Streams', 'Websocket'
       // Add more skills with icons as needed
     ];
 
@@ -20,7 +20,7 @@ class SkillsSection extends StatelessWidget {
         final crossAxisCount = isMobile ? 2 : 3;
 
         return Container(
-          padding: EdgeInsets.all(isMobile ? 30 : 50),
+          padding: EdgeInsets.all(isMobile ? 25 : 50),
           decoration: BoxDecoration(
             color: Color(0xFF1f2937),
           ),
@@ -40,7 +40,7 @@ class SkillsSection extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal:
-                  !isMobile && !isTablet ? MediaQuery.of(context).size.width * 0.15 : 10),
+                  !isMobile && !isTablet ? MediaQuery.of(context).size.width * 0.15 : 0),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: crossAxisCount,
                   crossAxisSpacing: 15, // Reduced from 20
@@ -56,6 +56,7 @@ class SkillsSection extends StatelessWidget {
                   ).animate().slide(duration: Duration(seconds: 1));
                 },
               ),
+              const SizedBox(height: 20),
             ],
           ),
         );
@@ -107,14 +108,17 @@ class _SkillChipState extends State<_SkillChip> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                widget.name,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: widget.isMobile ? 13 : 15, // Slightly smaller text
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  widget.name,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: widget.isMobile ? 13 : 15, // Slightly smaller text
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
             ],
           ),

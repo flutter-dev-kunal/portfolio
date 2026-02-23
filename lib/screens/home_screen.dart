@@ -17,11 +17,6 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             const Header(), // No animation for header, or add one if desired
-            // _AnimatedOnScrollWidget(
-            //   key: const Key('about'),
-            //   animationType: AnimationType.fadeIn,
-            //   child: const AboutSection(),
-            // ),
             AnimatedOnScrollWidget(
               key: const Key('skills'),
               animationType: AnimationType.fadeIn,

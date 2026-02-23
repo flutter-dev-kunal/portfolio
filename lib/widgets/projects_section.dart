@@ -27,9 +27,22 @@ class ProjectsSection extends StatelessWidget {
       builder: (context, constraints) {
         final isMobile = constraints.maxWidth < 600;
         final isTablet = constraints.maxWidth >= 600 && constraints.maxWidth < 1200;
+        final isWeb = constraints.maxWidth >= 1200;
+
+        // Calculate card width based on screen size
+        final horizontalPadding = isMobile ? 30.0 : 50.0;
+
+        final innerPadding = !isMobile && !isTablet
+            ? constraints.maxWidth * 0.15
+            : 0;
+        final availableWidth = constraints.maxWidth - (horizontalPadding * 2) - (innerPadding * 2);
+
+        final cardWidth = isMobile
+            ? availableWidth          // 1 card per row
+            : (availableWidth / 2) - 10; // 2 cards per row (10 = half of spacing)
 
         return Container(
-          padding: EdgeInsets.all(isMobile ? 30 : 50), // Less padding on mobile
+          padding: EdgeInsets.all(isMobile ? 30 : 50),
           color: Color(0xFF101827),
           child: Column(
             children: [
@@ -38,93 +51,90 @@ class ProjectsSection extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: isMobile ? 28 : null, // Smaller on mobile
+                  fontSize: isMobile ? 28 : null,
                 ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: !isMobile && !isTablet ? MediaQuery.of(context).size.width * 0.15 : 10,
+                  horizontal: isWeb ? constraints.maxWidth * 0.15 : 0,
                 ),
-                child: GridView.builder(
-                  shrinkWrap: true, // Allows GridView to work inside a ScrollView
-                  physics: const NeverScrollableScrollPhysics(), // Let the parent handle scrolling
-                  itemCount: projects.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: isMobile ? 1 : 2, // 1 for mobile, 2 for desktop/tablet
-                    crossAxisSpacing: 20, // Horizontal space between cards
-                    mainAxisSpacing: 20,  // Vertical space between cards
-                    mainAxisExtent: isMobile ? 350 : 430,  // Fixed height for cards to prevent overflow
-                  ),
-                  itemBuilder: (context, i) {
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 20,    // horizontal gap between cards
+                  runSpacing: 20, // vertical gap between cards
+                  children: List.generate(projects.length, (i) {
                     final project = projects[i];
-                    return Card(
-                      surfaceTintColor: Colors.white,
-                      color: const Color(0xFF1f2937),
-                      elevation: 5,
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: SizedBox(
-                              height: isMobile ? 180 : 250,
-                              width: double.infinity,
-                              child: Image.asset('assets/placeholder.png', fit: BoxFit.cover),
+                    return SizedBox(
+                      width: cardWidth,
+                      child: Card(
+                        surfaceTintColor: Colors.white,
+                        color: const Color(0xFF1f2937),
+                        elevation: 5,
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: SizedBox(
+                                height: isMobile ? 180 : 250,
+                                width: double.infinity,
+                                child: Image.asset('assets/placeholder.png', fit: BoxFit.cover),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              spacing: 10,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  project.title,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: isMobile ? 16 : 18,
-                                    color: Colors.white, // Ensure visibility on dark card
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                spacing: 10,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    project.title,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: isMobile ? 16 : 18,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.left,
                                   ),
-                                  textAlign: TextAlign.left,
-                                ),
-                                Text(
-                                  project.description,
-                                  style: TextStyle(
-                                    fontSize: isMobile ? 13 : 15,
-                                    color: Colors.white70,
+                                  Text(
+                                    project.description,
+                                    style: TextStyle(
+                                      fontSize: isMobile ? 13 : 15,
+                                      color: Colors.white70,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  textAlign: TextAlign.left,
-                                  maxLines: 3, // Prevents text from pushing card bounds
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                GestureDetector(
-                                  onTap: () => _onTapViewProject(i),
-                                  behavior: HitTestBehavior.opaque,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "View Project",
-                                        style: TextStyle(
-                                          fontSize: isMobile ? 13 : 15,
-                                          fontWeight: FontWeight.w600,
-                                          color: Color(0xFF60a5fa),
+                                  GestureDetector(
+                                    onTap: () => _onTapViewProject(i),
+                                    behavior: HitTestBehavior.opaque,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "View Project",
+                                          style: TextStyle(
+                                            fontSize: isMobile ? 13 : 15,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF60a5fa),
+                                          ),
+                                          textAlign: TextAlign.left,
                                         ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Icon(Icons.arrow_forward, color: Color(0xFF60a5fa), size: 20)
-                                    ],
+                                        const SizedBox(width: 10),
+                                        Icon(Icons.arrow_forward, color: Color(0xFF60a5fa), size: 20)
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ).animate().fadeIn(duration: Duration(seconds: 1));
-                  },
+                          ],
+                        ),
+                      ).animate().fadeIn(duration: Duration(seconds: 1)),
+                    );
+                  }),
                 ),
               )
             ],
@@ -137,11 +147,11 @@ class ProjectsSection extends StatelessWidget {
   void _onTapViewProject(int i) {
     switch(i) {
       case 0: launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=com.salcete.pharmacy_android&hl=en_IN'));
-              break;
+      break;
       case 1: launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=in.dreamlogic.nudge&hl=en_IN'));
-              break;
-      case 2: launchUrl(Uri.parse('https://play.google.com/store/search?q=limecar&c=apps&hl=en_IN'));
-              break;
+      break;
+      case 2: launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=in.limecar.android_app&hl=en_IN'));
+      break;
       default: break;
     }
   }
