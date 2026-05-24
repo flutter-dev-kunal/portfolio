@@ -10,16 +10,40 @@ class ProjectsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final projects = [
       Project(
+        title: 'LimeCar App',
+        description: 'Car rental platform for Goa offering easy vehicle booking, flexible plans, and seamless ride management.',
+        playStoreLink: 'https://play.google.com/store/apps/details?id=in.limecar.android_app&hl=en_IN',
+        appStoreLink: 'https://apps.apple.com/in/app/limecar-self-drive-car-rental/id6470351468'
+      ),
+      Project(
+        title: 'LimeCar Partner',
+        description: 'LimeCar Partner helps rental partners manage bookings, vehicles, customer coordination, and daily fleet rental operations efficiently.',
+        playStoreLink: 'https://play.google.com/store/apps/details?id=in.limecar.partner_app&hl=en_IN'
+      ),
+      Project(
         title: 'Salcete Pharma',
         description: 'Pharmacy app for medicine orders via search or prescription, featuring doctor search and medical storage.',
+        playStoreLink: 'https://play.google.com/store/apps/details?id=com.salcete.pharmacy_android&hl=en_IN'
+      ),
+      Project(
+        title: 'CookieRush Customer',
+        description: 'CookieRush helps customers discover nearby restaurants, earn rewards, level up, make payments, and enjoy social dining.',
+        playStoreLink: 'https://play.google.com/store/apps/details?id=com.cookierush.androidapp&hl=en_IN'
+      ),
+      Project(
+        title: 'CookieRush Partner',
+        description: 'CookieRush Partner helps restaurants manage menus, promotions, bills, posts, ambiance, and overall business operations efficiently',
+        playStoreLink: 'https://play.google.com/store/apps/details?id=in.cookierush.partnerApp&hl=en_IN'
+      ),
+      Project(
+        title: 'SportIt',
+        description: 'SportIt empowers sports coaches with structured training programs, skill development, progress tracking, and interactive learning experiences.',
+        playStoreLink: 'https://play.google.com/store/apps/details?id=academy.sportit&hl=en_IN'
       ),
       Project(
         title: 'Nudge App',
         description: 'Lead management platform featuring real-time tracking, integrated chat, and automated follow-up reminders.',
-      ),
-      Project(
-        title: 'Limecar App',
-        description: 'Car rental platform for Goa offering easy vehicle booking, flexible plans, and seamless ride management.',
+        playStoreLink: 'https://play.google.com/store/apps/details?id=in.dreamlogic.nudge&hl=en_IN'
       ),
     ];
 
@@ -108,7 +132,7 @@ class ProjectsSection extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   GestureDetector(
-                                    onTap: () => _onTapViewProject(i),
+                                    onTap: () => _showProjectOptions(context, project),
                                     behavior: HitTestBehavior.opaque,
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.start,
@@ -144,15 +168,157 @@ class ProjectsSection extends StatelessWidget {
     );
   }
 
-  void _onTapViewProject(int i) {
-    switch(i) {
-      case 0: launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=com.salcete.pharmacy_android&hl=en_IN'));
-      break;
-      case 1: launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=in.dreamlogic.nudge&hl=en_IN'));
-      break;
-      case 2: launchUrl(Uri.parse('https://play.google.com/store/apps/details?id=in.limecar.android_app&hl=en_IN'));
-      break;
-      default: break;
-    }
+  void _showProjectOptions(BuildContext context, Project project) {
+    final isWeb = MediaQuery.of(context).size.width > 600;
+
+    showDialog(
+      context: context,
+      barrierColor: Colors.black54,
+      builder: (_) {
+        return Dialog(
+          backgroundColor: const Color(0xFF374151),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Container(
+            width: isWeb ? 420 : double.infinity,
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Open Project',
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                /// Show this view only when play store link is provided - Android
+                if(project.playStoreLink != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 14),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(16),
+                      onTap: () {
+                        Navigator.pop(context);
+                        _launch(project.playStoreLink!);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.05),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.android,
+                              color: Colors.green,
+                              size: 32,
+                            ),
+
+                            const SizedBox(width: 16),
+
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Android App',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 4),
+
+                                  Text(
+                                    'Open in Play Store',
+                                    style: TextStyle(
+                                      color: Colors.white.withValues(alpha: 0.7),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                /// Show this view only when app store link is provided - iOS
+                if(project.appStoreLink != null)
+                  InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _launch(project.appStoreLink!);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.05),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.apple,
+                            color: Colors.white,
+                            size: 32,
+                          ),
+
+                          const SizedBox(width: 16),
+
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'iOS App',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+
+                                const SizedBox(height: 4),
+
+                                Text(
+                                  'Open in App Store',
+                                  style: TextStyle(
+                                    color: Colors.white.withValues(alpha: 0.7),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _launch(String url) async {
+    final uri = Uri.parse(url);
+
+    await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
   }
 }

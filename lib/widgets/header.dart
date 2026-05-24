@@ -59,8 +59,8 @@ class Header extends StatelessWidget {
               ).animate().fadeIn(duration: Duration(seconds: 1)),
               SizedBox(height: isMobile ? 25 : 30),
               const Text(
-                "I love creating beautiful, performant UI's and solving complex problems.",
-                style: TextStyle(fontSize: 16,color: Color(0xFF838996)), // Smaller font
+              "I love creating beautiful, high-performance user experiences and solving complex problems through clean, scalable, and intuitive mobile applications. Passionate about building seamless cross-platform apps with modern UI, smooth animations, and real-world functionality.",
+              style: TextStyle(fontSize: 16,color: Color(0xFF838996)), // Smaller font
                 textAlign: TextAlign.center,
               ).animate().fadeIn(duration: Duration(seconds: 1)),
               // SizedBox(height: isMobile ? 20 : 30),

@@ -6,11 +6,33 @@ class SkillsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final skills = [
+    //   'Flutter','Dart', 'Clean Architecture',
+    //   'Firebase','REST APIs', 'UI/UX Design','Bloc State Management',
+    //   'Swift UI', 'Kotlin', 'Streams', 'Websocket'
+    //   // Add more skills with icons as needed
+    // ];
+
     final skills = [
-      'Flutter','Dart', 'Clean Architecture',
-      'Firebase','REST APIs', 'UI/UX Design','Bloc State Management',
-      'Swift UI', 'Kotlin', 'Streams', 'Websocket'
-      // Add more skills with icons as needed
+      'Flutter',
+      'Dart',
+      'Cross-Platform App Development',
+      'Android Development',
+      'iOS Development',
+      'Clean Architecture',
+      'Firebase',
+      'REST APIs',
+      'Bloc',
+      'WebSocket',
+      'Streams',
+      'Responsive UI',
+      'UI/UX Design',
+      'Payment Gateway Integration',
+      'Map SDK Integration',
+      'Localization',
+      'Multi-language Support',
+      'Kotlin',
+      'SwiftUI',
     ];
 
     return LayoutBuilder(
