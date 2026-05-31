@@ -2,9 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:my_portfolio_website/constants/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:universal_html/html.dart' as html;
 
 class Footer extends StatelessWidget {
   const Footer({super.key});
@@ -74,18 +73,10 @@ class Footer extends StatelessWidget {
 
   void _downloadResume(BuildContext context) async {
     try {
-      if (kIsWeb) {
-        // dart:html approach
-        html.AnchorElement(href: 'assets/resume.pdf')
-          ..setAttribute('download', 'kunalsResume.pdf')
-          ..click();
-      } else {
-        // mobile - open with url_launcher
-        await launchUrl(
-            Uri.parse('assets/resume.pdf'),
-            mode: LaunchMode.externalApplication
-        );
-      }
+      await launchUrl(
+        Uri.parse(Constants.resumeDriveUrl),
+        mode: LaunchMode.externalApplication
+      );
     } catch(e) {
       if(!context.mounted) return;
 
