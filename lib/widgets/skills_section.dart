@@ -16,7 +16,7 @@ class SkillsSection extends StatelessWidget {
     final skills = [
       'Flutter',
       'Dart',
-      'Cross-Platform App Development',
+      'Cross-Platform Development',
       'Android Development',
       'iOS Development',
       'Clean Architecture',
@@ -27,7 +27,7 @@ class SkillsSection extends StatelessWidget {
       'Streams',
       'Responsive UI',
       'UI/UX Design',
-      'Payment Gateway Integration',
+      'Payment Gateway',
       'Map SDK Integration',
       'Localization',
       'Multi-language Support',

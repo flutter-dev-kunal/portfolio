@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
             AnimatedOnScrollWidget(
               key: const Key('projects'),
               animationType: AnimationType.fadeIn,
-              child: const ProjectsSection(),
+              child: ProjectsSection(),
             ),
             AnimatedOnScrollWidget(
               key: const Key('footer'),

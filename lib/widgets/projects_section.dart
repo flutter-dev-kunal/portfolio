@@ -1,51 +1,75 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:my_portfolio_website/constants/constants.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/project.dart';
 
-class ProjectsSection extends StatelessWidget {
+class ProjectsSection extends StatefulWidget {
   const ProjectsSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final projects = [
-      Project(
+  State<ProjectsSection> createState() => _ProjectsSectionState();
+}
+
+class _ProjectsSectionState extends State<ProjectsSection> {
+  final Map<int, int> _currentIndex = {};
+
+  List<String> getProjectScreenshots(int index) {
+    if (index < 0 || index >= Constants.projectScreenshots.length) {
+      return [];
+    }
+
+    return Constants.projectScreenshots[index];
+  }
+
+  @override
+  Widget build(BuildContext context) {final projects = [
+    Project(
         title: 'LimeCar App',
         description: 'Car rental platform for Goa offering easy vehicle booking, flexible plans, and seamless ride management.',
         playStoreLink: 'https://play.google.com/store/apps/details?id=in.limecar.android_app&hl=en_IN',
-        appStoreLink: 'https://apps.apple.com/in/app/limecar-self-drive-car-rental/id6470351468'
-      ),
-      Project(
+        appStoreLink: 'https://apps.apple.com/in/app/limecar-self-drive-car-rental/id6470351468',
+        screenshoots: getProjectScreenshots(0)
+    ),
+    Project(
         title: 'LimeCar Partner',
         description: 'LimeCar Partner helps rental partners manage bookings, vehicles, customer coordination, and daily fleet rental operations efficiently.',
-        playStoreLink: 'https://play.google.com/store/apps/details?id=in.limecar.partner_app&hl=en_IN'
-      ),
-      Project(
+        playStoreLink: 'https://play.google.com/store/apps/details?id=in.limecar.partner_app&hl=en_IN',
+        screenshoots: getProjectScreenshots(1)
+    ),
+    Project(
         title: 'Salcete Pharma',
         description: 'Pharmacy app for medicine orders via search or prescription, featuring doctor search and medical storage.',
-        playStoreLink: 'https://play.google.com/store/apps/details?id=com.salcete.pharmacy_android&hl=en_IN'
-      ),
-      Project(
+        playStoreLink: 'https://play.google.com/store/apps/details?id=com.salcete.pharmacy_android&hl=en_IN',
+        screenshoots: getProjectScreenshots(2)
+    ),
+    Project(
         title: 'CookieRush Customer',
         description: 'CookieRush helps customers discover nearby restaurants, earn rewards, level up, make payments, and enjoy social dining.',
-        playStoreLink: 'https://play.google.com/store/apps/details?id=com.cookierush.androidapp&hl=en_IN'
-      ),
-      Project(
+        playStoreLink: 'https://play.google.com/store/apps/details?id=com.cookierush.androidapp&hl=en_IN',
+        screenshoots: getProjectScreenshots(3)
+    ),
+    Project(
         title: 'CookieRush Partner',
         description: 'CookieRush Partner helps restaurants manage menus, promotions, bills, posts, ambiance, and overall business operations efficiently',
-        playStoreLink: 'https://play.google.com/store/apps/details?id=in.cookierush.partnerApp&hl=en_IN'
-      ),
-      Project(
+        playStoreLink: 'https://play.google.com/store/apps/details?id=in.cookierush.partnerApp&hl=en_IN',
+        screenshoots: getProjectScreenshots(4)
+    ),
+    Project(
         title: 'SportIt',
         description: 'SportIt empowers sports coaches with structured training programs, skill development, progress tracking, and interactive learning experiences.',
-        playStoreLink: 'https://play.google.com/store/apps/details?id=academy.sportit&hl=en_IN'
-      ),
-      Project(
+        playStoreLink: 'https://play.google.com/store/apps/details?id=academy.sportit&hl=en_IN',
+        screenshoots: getProjectScreenshots(5)
+    ),
+    Project(
         title: 'Nudge App',
         description: 'Lead management platform featuring real-time tracking, integrated chat, and automated follow-up reminders.',
-        playStoreLink: 'https://play.google.com/store/apps/details?id=in.dreamlogic.nudge&hl=en_IN'
-      ),
-    ];
+        playStoreLink: 'https://play.google.com/store/apps/details?id=in.dreamlogic.nudge&hl=en_IN',
+        screenshoots: getProjectScreenshots(6)
+    ),
+  ];
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -98,62 +122,21 @@ class ProjectsSection extends StatelessWidget {
                         elevation: 5,
                         child: Column(
                           children: [
+                            ///Image View
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
-                              child: SizedBox(
-                                height: isMobile ? 180 : 250,
-                                width: double.infinity,
-                                child: Image.asset('assets/placeholder.png', fit: BoxFit.cover),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Column(
-                                spacing: 10,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
                                 children: [
-                                  Text(
-                                    project.title,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: isMobile ? 16 : 18,
-                                      color: Colors.white,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  Text(
-                                    project.description,
-                                    style: TextStyle(
-                                      fontSize: isMobile ? 13 : 15,
-                                      color: Colors.white70,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => _showProjectOptions(context, project),
-                                    behavior: HitTestBehavior.opaque,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "View Project",
-                                          style: TextStyle(
-                                            fontSize: isMobile ? 13 : 15,
-                                            fontWeight: FontWeight.w600,
-                                            color: Color(0xFF60a5fa),
-                                          ),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Icon(Icons.arrow_forward, color: Color(0xFF60a5fa), size: 20)
-                                      ],
-                                    ),
-                                  ),
+                                  ///Image slider view
+                                  _imageCarouselSliderView(isMobile, i),
+                                  ///Dot slider indicator
+                                  _dotSliderIndicator(i),
                                 ],
                               ),
                             ),
+                            ///Description View
+                            _projectInfoView(project, isMobile, context),
                           ],
                         ),
                       ).animate().fadeIn(duration: Duration(seconds: 1)),
@@ -165,6 +148,106 @@ class ProjectsSection extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Padding _projectInfoView(Project project, bool isMobile, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        spacing: 10,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            project.title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: isMobile ? 16 : 18,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.left,
+          ),
+          Text(
+            project.description,
+            style: TextStyle(
+              fontSize: isMobile ? 13 : 15,
+              color: Colors.white70,
+            ),
+            textAlign: TextAlign.left,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+          ),
+          GestureDetector(
+            onTap: () => _showProjectOptions(context, project),
+            behavior: HitTestBehavior.opaque,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "View Project",
+                  style: TextStyle(
+                    fontSize: isMobile ? 13 : 15,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF60a5fa),
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+                const SizedBox(width: 10),
+                Icon(Icons.arrow_forward, color: Color(0xFF60a5fa), size: 20)
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  CarouselSlider _imageCarouselSliderView(bool isMobile, int i) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: isMobile ? 180 : 250,
+        viewportFraction: 1,
+        autoPlay: true,
+        autoPlayInterval: const Duration(seconds: 3),
+        onPageChanged: (index, reason) {
+          setState(() {
+            _currentIndex[i] = index;
+          });
+        },
+      ),
+      items: getProjectScreenshots(i).map((image) {
+        return Image.asset(
+          image,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        );
+      }).toList(),
+    );
+  }
+
+  Positioned _dotSliderIndicator(int i) {
+    return Positioned(
+      bottom: 12,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 6,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.black54,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: AnimatedSmoothIndicator(
+          activeIndex: _currentIndex[i] ?? 0,
+          count: getProjectScreenshots(i).length,
+          effect: WormEffect(
+            dotHeight: 8,
+            dotWidth: 8,
+            activeDotColor: Colors.white,
+            dotColor: Colors.white38,
+          ),
+        ),
+      ),
     );
   }
 
