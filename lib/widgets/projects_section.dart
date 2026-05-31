@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -216,10 +218,37 @@ class _ProjectsSectionState extends State<ProjectsSection> {
         },
       ),
       items: getProjectScreenshots(i).map((image) {
-        return Image.asset(
-          image,
-          width: double.infinity,
-          fit: BoxFit.cover,
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              /// Blurred background
+              Image.asset(
+                image,
+                fit: BoxFit.cover,
+              ),
+
+              BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 20,
+                  sigmaY: 20,
+                ),
+                child: Container(
+                  color: Colors.black.withValues(alpha:  0.3),
+                ),
+              ),
+
+              /// Foreground screenshot
+              Transform.scale(
+                scale: 1.10,
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ],
+          ),
         );
       }).toList(),
     );
